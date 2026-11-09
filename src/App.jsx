@@ -1,5 +1,4 @@
 import { useEffect, useLayoutEffect, useMemo, useRef, useState, useCallback } from "react";
-import { createClient } from "@supabase/supabase-js";
 import {
   Plus, X, Cloud, Copy, Download, Trash2, AlertCircle, Check, Pencil,
   Zap, AlignJustify, FileText, ChevronUp, ChevronDown, Layers, Eraser, ClipboardCopy, Search, Upload,
@@ -7,8 +6,8 @@ import {
 import Floaters from "./components/Floaters.jsx";
 import CloudPanel from "./components/CloudPanel.jsx";
 import SegmentCard from "./components/SegmentCard.jsx";
+import { sb, isSupabaseConfigured } from "./lib/supabase.js";
 
-const sb = createClient(import.meta.env.VITE_SUPABASE_URL, import.meta.env.VITE_SUPABASE_ANON_KEY);
 const CLIENT_ID = Math.random().toString(36).slice(2);
 const uid = () => Math.random().toString(36).slice(2, 10);
 const FIRST = "--- [Paste #1] ---\n\n";
@@ -270,6 +269,7 @@ export default function App() {
         wsId={wsId}
         onCopyLink={() => copy(location.href, "Workspace link copied — open it anywhere to sync")}
         onSwitch={switchWorkspace}
+        isCloudConnected={isSupabaseConfigured}
       />
 
       <main className="max-w-7xl mx-auto flex flex-col gap-6 sm:gap-8">

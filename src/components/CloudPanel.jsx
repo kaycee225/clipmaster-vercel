@@ -9,6 +9,7 @@ export default function CloudPanel({
   wsId,
   onCopyLink,
   onSwitch,
+  isCloudConnected = false,
 }) {
   return (
     <>
@@ -38,8 +39,14 @@ export default function CloudPanel({
         </div>
 
         <div className="flex flex-col gap-3 text-sm flex-grow">
-          <p className="text-[var(--muted-foreground)] leading-relaxed m-0">
-            Your tabs sync to the cloud by workspace link. Open the link on any device to pick up where you left off.
+          <div className={`px-3 py-2 rounded-xl text-xs font-semibold flex items-center gap-2 ${isCloudConnected ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' : 'bg-purple-50 text-purple-700 border border-purple-200'}`}>
+            <span className={`w-2 h-2 rounded-full ${isCloudConnected ? 'bg-emerald-500' : 'bg-purple-500'}`} />
+            <span>{isCloudConnected ? 'Connected to Supabase' : 'Local Storage Mode (Vercel ready)'}</span>
+          </div>
+          <p className="text-[var(--muted-foreground)] leading-relaxed m-0 text-xs">
+            {isCloudConnected
+              ? 'Your tabs sync to the cloud by workspace link. Open the link on any device to pick up where you left off.'
+              : 'Workspaces are saved locally in this browser. To enable cross-device cloud sync on Vercel, set VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY.'}
           </p>
 
           <div className="flex flex-col gap-2">
